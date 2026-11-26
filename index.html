@@ -715,7 +715,7 @@
         .replace(/"/g, '&quot;');
     }
 
-    function renderLocations() {
+   function renderLocations() {
       const gridEl = document.getElementById('locationsGrid');
       const countEl = document.getElementById('resultsCount');
       const q = searchQuery.trim().toLowerCase();
@@ -733,13 +733,13 @@
         return matchZone && matchDistrict && matchQuery;
       });
 
-      countEl.textContent = `顯示 ${filtered.length} / ${allLocations.length} 個銷售點 · Showing ${filtered.length} of ${allLocations.length} locations`;
+      countEl.textContent = `Showing ${filtered.length} of ${allLocations.length} locations 顯示 ${filtered.length} / ${allLocations.length} 個銷售點`;
 
       if (filtered.length === 0) {
         gridEl.innerHTML = `
           <div class="empty-state">
-            <p>找不到符合條件的銷售地點 · No matching retail locations found.</p>
-            <button type="button" id="resetFiltersBtn">重設篩選條件 · Reset Filters</button>
+            <p>No matching 找不到符合地點</p>
+            <button type="button" id="resetFiltersBtn">Reset Filter 重設篩選</button>
           </div>
         `;
         document.getElementById('resetFiltersBtn').addEventListener('click', () => {
@@ -757,7 +757,13 @@
 
       gridEl.innerHTML = filtered.map(item => {
         const mapsQuery = encodeURIComponent(`${item.shopname_c} ${item.address_c} Hong Kong`);
-        const fullCopyText = `${item.shopname_c} (${item.shopname_e})\n${item.address_c}\n${item.address_e}`;
+        const mapHref = (item.gmap_link || '').trim() || `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+        const fullCopyText = [
+          item.shopname_c,
+          item.address_c,
+          item.shopname_e,
+          item.address_e
+        ].filter(Boolean).join('\n');
 
         return `
           <article class="location-card">
@@ -774,11 +780,11 @@
               </div>
             </div>
             <div class="card-actions">
-              <a class="action-link" href="https://www.google.com/maps/search/?api=1&query=${mapsQuery}" target="_blank" rel="noopener noreferrer">
-                📍 地圖 · Map
+              <a class="action-link" href="${escapeHTML(mapHref)}" target="_blank" rel="noopener noreferrer">
+                📍 Map 地圖
               </a>
               <button type="button" class="action-link copy-addr-btn" data-copy="${escapeHTML(fullCopyText)}">
-                📋 複製地址 · Copy
+                📋 Copy 複製地址
               </button>
             </div>
           </article>
@@ -789,7 +795,8 @@
         btn.addEventListener('click', () => copyAddress(btn.dataset.copy));
       });
     }
-
+   
+   
     async function init() {
       const countEl = document.getElementById('resultsCount');
       const gridEl = document.getElementById('locationsGrid');
