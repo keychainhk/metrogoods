@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metrogoods & Keychain Hong Kong</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-overlay: rgba(15, 23, 42, 0.72);
+      --surface-glass: rgba(255, 255, 255, 0.92);
+      --surface-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent: #d9262e;
+      --accent-hover: #b91c22;
+      --accent-soft: #fef2f2;
+      --border-subtle: rgba(15, 23, 42, 0.1);
+      --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.45);
+      --shadow-card: 0 4px 12px rgba(15, 23, 42, 0.06);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+   body {
+    font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #0f172a;
+    /* Local repository background image with readability overlay */
+    background-image:
+        linear-gradient(180deg, rgba(10, 15, 28, 0.45) 0%, rgba(15, 23, 42, 0.56) 50%, rgba(10, 15, 28, 0.66) 100%),
+        url('https://na.cx/i/pGK1VCg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    line-height: 1.5;
+}
+
+    /* Top Logo Header (Directly on Background) */
+    .site-header {
+      width: 100%;
+      padding: 32px 20px 18px;
+      text-align: center;
+    }
+
+    .logo-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 92%;
+    }
+
+    .logo-wrapper img {
+      max-height: 76px;
+      width: auto;
+      max-width: 100%;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.55));
+    }
+
+    .page-title-group {
+      margin-top: 16px;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .page-title-group h1 {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .page-title-group p {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.88);
+      margin-top: 4px;
+    }
+
+    /* Main Glass Container */
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 8px auto 40px;
+      padding: 0 16px;
+      flex: 1;
+    }
+
+    .directory-panel {
+      background: var(--surface-glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 24px;
+    }
+
+    /* Controls: Zone Tabs + Search + District */
+    .controls-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .zone-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .zone-btn {
+      appearance: none;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text-primary);
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .zone-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .zone-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(217, 38, 46, 0.28);
+    }
+
+    .zone-count {
+      font-size: 0.78rem;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.08);
+      color: inherit;
+    }
+
+    .zone-btn.active .zone-count {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .filter-inputs {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 12px;
+    }
+
+    @media (max-width: 680px) {
+      .filter-inputs {
+        grid-template-columns: 1fr;
+      }
+      .directory-panel {
+        padding: 18px 14px;
+      }
+    }
+
+    .input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-box svg {
+      position: absolute;
+      left: 14px;
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input,
+    .district-select {
+      width: 100%;
+      height: 44px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .search-input {
+      padding: 0 38px 0 40px;
+    }
+
+    .district-select {
+      padding: 0 14px;
+      cursor: pointer;
+    }
+
+    .search-input:focus,
+    .district-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(217, 38, 46, 0.14);
+    }
+
+    .clear-btn {
+      position: absolute;
+      right: 10px;
+      background: #e2e8f0;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clear-btn.visible {
+      display: flex;
+    }
+
+    /* Results Meta */
+    .results-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px 0;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* Location Cards Grid */
+    .locations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .location-card {
+      background: var(--surface-card);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .location-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.11);
+      border-color: rgba(217, 38, 46, 0.35);
+    }
+
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+
+    .badge-zone {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .badge-district {
+      background: #f1f5f9;
+      color: var(--text-secondary);
+    }
+
+    .shop-name-c {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    .shop-name-e {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .address-block {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(15, 23, 42, 0.1);
+      font-size: 0.9rem;
+    }
+
+    .address-c {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .address-e {
+      color: var(--text-muted);
+      font-size: 0.83rem;
+      margin-top: 3px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .action-link {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: #f8fafc;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .action-link:hover {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 20px;
+      color: var(--text-secondary);
+      grid-column: 1 / -1;
+    }
+
+    .empty-state button {
+      margin-top: 12px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+/* Stock Disclaimer Notice */
+    .disclaimer-notice {
+      max-width: 1140px;
+      width: 100%;
+      margin: 0 auto 28px;
+      padding: 0 20px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+      line-height: 1.55;
+    }
+
+
+    /* Footer & Social Buttons */
+    .site-footer {
+      background: rgba(10, 15, 28, 0.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 28px 20px 34px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .footer-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.78);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+
+    .social-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #ffffff;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .social-btn svg {
+      width: 19px;
+      height: 19px;
+      fill: currentColor;
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+    }
+
+    .btn-facebook {
+      background: #1877f2;
+    }
+
+    .btn-instagram {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      transition: all 0.25s ease;
+      z-index: 999;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Logo Section (Directly on Background) -->
+  <header class="site-header">
+    <div class="logo-wrapper">
+      <img src="logo_bar.png" alt="Brand Logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';" />
+      <span id="logo-fallback" style="display:none; font-weight:700; font-size:1.35rem; color:#ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.6);">metrogoods · Keychain Hong Kong</span>
+    </div>
+    <div class="page-title-group">
+      <h1>Find Us · 尋找銷售點</h1>
+   </div>
+  </header>
+
+  <!-- Interactive Sales Locations Directory -->
+  <main class="container">
+    <section class="directory-panel" aria-label="Sales Locations Directory">
+      <div class="controls-bar">
+        <!-- Zone Filter Tabs -->
+        <div class="zone-tabs" id="zoneTabs"></div>
+
+        <!-- Search & District Filter -->
+        <div class="filter-inputs">
+          <div class="input-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search shop name or district (e.g., Central, Airport) 搜尋店舖名稱或地區 (如：中環、機場)"
+              aria-label="Search shop name, district or address"
+            />
+            <button type="button" id="clearSearchBtn" class="clear-btn" aria-label="Clear search">✕</button>
+          </div>
+
+          <select id="districtSelect" class="district-select" aria-label="Filter by District">
+            <option value="ALL">All Districts 所有地區</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="results-meta">
+        <span id="resultsCount">Loading locations 載入銷售點...</span>
+      </div>
+
+      <div class="locations-grid" id="locationsGrid"></div>
+    </section>
+  </main>
+  
+<!-- Stock Availability Disclaimer -->
+  <p class="disclaimer-notice">
+    Products sold at various sales locations may vary, subject to stock availability 各銷售點所售產品可能有所不同，視庫存情況而定
+  </p>
+
+  <!-- Social Media & Contact Footer -->
+  <footer class="site-footer">
+	<p class="footer-label">Follow Us 追蹤最新動態</p>
+    <div class="social-buttons">
+	
+	      <a class="social-btn btn-instagram" href="https://www.instagram.com/metrogoods.hk" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+        @metrogoods.hk
+      </a>
+	
+	      <a class="social-btn btn-instagram" href="https://www.instagram.com/keychainhk" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+        @keychainhk
+      </a>
+	
+	      <a class="social-btn btn-facebook" href="https://www.facebook.com/keychainhk" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+        keychainhk
+      </a>
+	
+      <a class="social-btn btn-whatsapp" href="https://wa.me/85295399243" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.59-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.59.83 2.02.9 2.17.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.41.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.65-.14.27.1 1.69.8 1.98.94.29.14.48.22.55.34.07.12.07.69-.17 1.37Z"/></svg>
+        合作／查詢
+      </a>
+
+
+
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const CSV_URL = 'saleslocation.csv';
+
+    let allLocations = [];
+    let selectedZone = 'ALL';
+    let selectedDistrict = 'ALL';
+    let searchQuery = '';
+
+    // RFC-4180 compliant CSV parser supporting quoted fields with commas
+    function parseCSV(text) {
+      const rows = [];
+      let currentRow = [];
+      let currentVal = '';
+      let insideQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+          if (insideQuotes && nextChar === '"') {
+            currentVal += '"';
+            i++;
+          } else {
+            insideQuotes = !insideQuotes;
+          }
+        } else if (char === ',' && !insideQuotes) {
+          currentRow.push(currentVal.trim());
+          currentVal = '';
+        } else if ((char === '\r' || char === '\n') && !insideQuotes) {
+          if (char === '\r' && nextChar === '\n') i++;
+          if (currentVal.length > 0 || currentRow.length > 0) {
+            currentRow.push(currentVal.trim());
+            rows.push(currentRow);
+          }
+          currentRow = [];
+          currentVal = '';
+        } else {
+          currentVal += char;
+        }
+      }
+      if (currentVal.length > 0 || currentRow.length > 0) {
+        currentRow.push(currentVal.trim());
+        rows.push(currentRow);
+      }
+
+      if (rows.length < 2) return [];
+      const headers = rows[0].map(h => h.replace(/^\uFEFF/, '').trim());
+      return rows.slice(1).map(row => {
+        const obj = {};
+        headers.forEach((h, idx) => {
+          obj[h] = row[idx] || '';
+        });
+        return obj;
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function copyAddress(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Address copied 已複製地址');
+      }).catch(() => {
+        showToast('Failed 無法複製');
+      });
+    }
+
+    function buildZoneTabs() {
+      const zoneTabsEl = document.getElementById('zoneTabs');
+      const zoneMap = new Map();
+
+      allLocations.forEach(item => {
+        const key = item.zone_c;
+        if (!zoneMap.has(key)) {
+          zoneMap.set(key, { zone_c: item.zone_c, zone_e: item.zone_e, count: 0 });
+        }
+        zoneMap.get(key).count++;
+      });
+
+      const tabs = [
+        { key: 'ALL', label: 'All 全部地點', count: allLocations.length },
+        ...Array.from(zoneMap.values()).map(z => ({
+          key: z.zone_c,
+          label: `${z.zone_c} · ${z.zone_e}`,
+          count: z.count
+        }))
+      ];
+
+      zoneTabsEl.innerHTML = tabs.map(tab => `
+        <button
+          type="button"
+          class="zone-btn ${selectedZone === tab.key ? 'active' : ''}"
+          data-zone="${escapeHTML(tab.key)}"
+        >
+          <span>${escapeHTML(tab.label)}</span>
+          <span class="zone-count">${tab.count}</span>
+        </button>
+      `).join('');
+
+      zoneTabsEl.querySelectorAll('.zone-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedZone = btn.dataset.zone;
+          selectedDistrict = 'ALL';
+          buildZoneTabs();
+          buildDistrictOptions();
+          renderLocations();
+        });
+      });
+    }
+
+    function buildDistrictOptions() {
+      const selectEl = document.getElementById('districtSelect');
+      const filteredByZone = selectedZone === 'ALL'
+        ? allLocations
+        : allLocations.filter(item => item.zone_c === selectedZone);
+
+      const districts = new Map();
+      filteredByZone.forEach(item => {
+        if (!districts.has(item.district_c)) {
+          districts.set(item.district_c, `${item.district_c} · ${item.district_e}`);
+        }
+      });
+
+      selectEl.innerHTML = `<option value="ALL">All Districts 所有地區	(${districts.size})</option>` +
+        Array.from(districts.entries())
+          .map(([val, label]) => `<option value="${escapeHTML(val)}">${escapeHTML(label)}</option>`)
+          .join('');
+
+      selectEl.value = selectedDistrict;
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderLocations() {
+      const gridEl = document.getElementById('locationsGrid');
+      const countEl = document.getElementById('resultsCount');
+      const q = searchQuery.trim().toLowerCase();
+
+      const filtered = allLocations.filter(item => {
+        const matchZone = selectedZone === 'ALL' || item.zone_c === selectedZone;
+        const matchDistrict = selectedDistrict === 'ALL' || item.district_c === selectedDistrict;
+        const matchQuery = !q || [
+          item.zone_c, item.zone_e,
+          item.district_c, item.district_e,
+          item.shopname_c, item.shopname_e,
+          item.address_c, item.address_e
+        ].some(field => field.toLowerCase().includes(q));
+
+        return matchZone && matchDistrict && matchQuery;
+      });
+
+      countEl.textContent = `顯示 ${filtered.length} / ${allLocations.length} 個銷售點 · Showing ${filtered.length} of ${allLocations.length} locations`;
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = `
+          <div class="empty-state">
+            <p>找不到符合條件的銷售地點 · No matching retail locations found.</p>
+            <button type="button" id="resetFiltersBtn">重設篩選條件 · Reset Filters</button>
+          </div>
+        `;
+        document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+          selectedZone = 'ALL';
+          selectedDistrict = 'ALL';
+          searchQuery = '';
+          document.getElementById('searchInput').value = '';
+          document.getElementById('clearSearchBtn').classList.remove('visible');
+          buildZoneTabs();
+          buildDistrictOptions();
+          renderLocations();
+        });
+        return;
+      }
+
+      gridEl.innerHTML = filtered.map(item => {
+        const mapsQuery = encodeURIComponent(`${item.shopname_c} ${item.address_c} Hong Kong`);
+        const fullCopyText = `${item.shopname_c} (${item.shopname_e})\n${item.address_c}\n${item.address_e}`;
+
+        return `
+          <article class="location-card">
+            <div>
+              <div class="card-badges">
+                <span class="badge badge-zone">${escapeHTML(item.zone_c)} · ${escapeHTML(item.zone_e)}</span>
+                <span class="badge badge-district">${escapeHTML(item.district_c)} · ${escapeHTML(item.district_e)}</span>
+              </div>
+              <h2 class="shop-name-c">${escapeHTML(item.shopname_c)}</h2>
+              <div class="shop-name-e">${escapeHTML(item.shopname_e)}</div>
+              <div class="address-block">
+                <div class="address-c">${escapeHTML(item.address_c)}</div>
+                <div class="address-e">${escapeHTML(item.address_e)}</div>
+              </div>
+            </div>
+            <div class="card-actions">
+              <a class="action-link" href="https://www.google.com/maps/search/?api=1&query=${mapsQuery}" target="_blank" rel="noopener noreferrer">
+                📍 地圖 · Map
+              </a>
+              <button type="button" class="action-link copy-addr-btn" data-copy="${escapeHTML(fullCopyText)}">
+                📋 複製地址 · Copy
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      gridEl.querySelectorAll('.copy-addr-btn').forEach(btn => {
+        btn.addEventListener('click', () => copyAddress(btn.dataset.copy));
+      });
+    }
+
+    async function init() {
+      const countEl = document.getElementById('resultsCount');
+      const gridEl = document.getElementById('locationsGrid');
+
+      try {
+        const response = await fetch(`${CSV_URL}?t=${Date.now()}`, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const csvText = await response.text();
+        allLocations = parseCSV(csvText);
+
+        if (allLocations.length === 0) {
+          throw new Error('CSV is empty');
+        }
+      } catch (err) {
+        countEl.textContent = 'Sales location list not loaded successfully';
+        gridEl.innerHTML = `
+          <div class="empty-state">
+            <p>Sales location list not loaded successfully</p>
+          </div>
+        `;
+        return;
+      }
+
+      buildZoneTabs();
+      buildDistrictOptions();
+      renderLocations();
+
+      const searchInput = document.getElementById('searchInput');
+      const clearBtn = document.getElementById('clearSearchBtn');
+      const districtSelect = document.getElementById('districtSelect');
+
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        clearBtn.classList.toggle('visible', searchQuery.length > 0);
+        renderLocations();
+      });
+
+      clearBtn.addEventListener('click', () => {
+        searchQuery = '';
+        searchInput.value = '';
+        clearBtn.classList.remove('visible');
+        searchInput.focus();
+        renderLocations();
+      });
+
+      districtSelect.addEventListener('change', (e) => {
+        selectedDistrict = e.target.value;
+        renderLocations();
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
