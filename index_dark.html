@@ -41,7 +41,6 @@
       display: flex;
       flex-direction: column;
       background-color: #05070c;
-      /* Local repository background image with dark readability overlay */
       background-image:
           linear-gradient(180deg, rgba(5, 7, 12, 0.72) 0%, rgba(8, 11, 18, 0.80) 50%, rgba(5, 7, 12, 0.90) 100%),
           url('https://na.cx/i/pGK1VCg.jpg');
@@ -51,7 +50,7 @@
       line-height: 1.5;
     }
 
-    /* Top Logo Header (Directly on Background) */
+    /* Top Logo Header */
     .site-header {
       width: 100%;
       padding: 32px 20px 18px;
@@ -74,8 +73,67 @@
       filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.75));
     }
 
+    /* Social Media & Contact Bar (Between Logo & Find Us) */
+    .social-section {
+      margin: 18px auto 6px;
+      padding: 0 12px;
+      text-align: center;
+    }
+
+    .social-label {
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 10px;
+      font-weight: 500;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.75);
+    }
+
+    .social-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: #ffffff;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .social-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+    }
+
+    .btn-facebook {
+      background: #1877f2;
+    }
+
+    .btn-instagram {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
     .page-title-group {
-      margin-top: 16px;
+      margin-top: 20px;
       color: #ffffff;
       text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
     }
@@ -96,7 +154,7 @@
     .container {
       width: 100%;
       max-width: 1140px;
-      margin: 8px auto 40px;
+      margin: 8px auto 32px;
       padding: 0 16px;
       flex: 1;
     }
@@ -408,74 +466,13 @@
     .disclaimer-notice {
       max-width: 1140px;
       width: 100%;
-      margin: 0 auto 28px;
+      margin: 0 auto 36px;
       padding: 0 20px;
       text-align: center;
       font-size: 0.82rem;
       color: rgba(255, 255, 255, 0.72);
       text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
       line-height: 1.55;
-    }
-
-    /* Footer & Social Buttons */
-    .site-footer {
-      background: rgba(5, 7, 12, 0.95);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid var(--border-subtle);
-      padding: 28px 20px 34px;
-      text-align: center;
-      color: #ffffff;
-    }
-
-    .footer-label {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.72);
-      margin-bottom: 14px;
-      font-weight: 500;
-    }
-
-    .social-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .social-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 11px 20px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.92rem;
-      color: #ffffff;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
-    }
-
-    .social-btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
-    }
-
-    .social-btn svg {
-      width: 19px;
-      height: 19px;
-      fill: currentColor;
-    }
-
-    .btn-whatsapp {
-      background: #25d366;
-    }
-
-    .btn-facebook {
-      background: #1877f2;
-    }
-
-    .btn-instagram {
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     }
 
     /* Toast Notification */
@@ -505,12 +502,39 @@
 </head>
 <body>
 
-  <!-- Top Logo Section (Directly on Background) -->
+  <!-- Top Logo, Social Links & Title Section -->
   <header class="site-header">
     <div class="logo-wrapper">
       <img src="logo_bar.png" alt="Brand Logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';" />
       <span id="logo-fallback" style="display:none; font-weight:700; font-size:1.35rem; color:#ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.6);">metrogoods · Keychain Hong Kong</span>
     </div>
+
+    <!-- Social Media & Contact Buttons -->
+    <div class="social-section">
+      <p class="social-label">Follow Us 追蹤最新動態</p>
+      <div class="social-buttons">
+        <a class="social-btn btn-instagram" href="https://www.instagram.com/metrogoods.hk" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          @metrogoods.hk
+        </a>
+
+        <a class="social-btn btn-instagram" href="https://www.instagram.com/keychainhk" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          @keychainhk
+        </a>
+
+        <a class="social-btn btn-facebook" href="https://www.facebook.com/keychainhk" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+          keychainhk
+        </a>
+
+        <a class="social-btn btn-whatsapp" href="https://wa.me/85295399243" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.59-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.59.83 2.02.9 2.17.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.41.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.65-.14.27.1 1.69.8 1.98.94.29.14.48.22.55.34.07.12.07.69-.17 1.37Z"/></svg>
+          合作／查詢
+        </a>
+      </div>
+    </div>
+
     <div class="page-title-group">
       <h1>Find Us · 尋找銷售點</h1>
     </div>
@@ -558,32 +582,6 @@
   <p class="disclaimer-notice">
     Products sold at various sales locations may vary, subject to stock availability 各銷售點所售產品可能有所不同，視庫存情況而定
   </p>
-
-  <!-- Social Media & Contact Footer -->
-  <footer class="site-footer">
-    <p class="footer-label">Follow Us 追蹤最新動態</p>
-    <div class="social-buttons">
-      <a class="social-btn btn-instagram" href="https://www.instagram.com/metrogoods.hk" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
-        @metrogoods.hk
-      </a>
-
-      <a class="social-btn btn-instagram" href="https://www.instagram.com/keychainhk" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
-        @keychainhk
-      </a>
-
-      <a class="social-btn btn-facebook" href="https://www.facebook.com/keychainhk" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-        keychainhk
-      </a>
-
-      <a class="social-btn btn-whatsapp" href="https://wa.me/85295399243" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.59-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.59.83 2.02.9 2.17.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.41.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.65-.14.27.1 1.69.8 1.98.94.29.14.48.22.55.34.07.12.07.69-.17 1.37Z"/></svg>
-        合作／查詢
-      </a>
-    </div>
-  </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -868,4 +866,4 @@
   </script>
 </body>
 </html>
-
+```[cite: 2]
