@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-overlay: rgba(5, 7, 12, 0.84);
       --surface-glass: rgba(15, 19, 28, 0.82);
       --surface-card: #161b26;
       --surface-card-hover: #1c2230;
@@ -38,11 +37,12 @@
       font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text-primary);
       min-height: 100vh;
+      padding-bottom: var(--footer-height, 56px);
       display: flex;
       flex-direction: column;
       background-color: #05070c;
       background-image:
-          linear-gradient(180deg, rgba(5, 7, 12, 0.72) 0%, rgba(8, 11, 18, 0.80) 50%, rgba(5, 7, 12, 0.90) 100%),
+          linear-gradient(180deg, rgba(5, 7, 12, 0.50) 0%, rgba(8, 11, 18, 0.58) 50%, rgba(5, 7, 12, 0.68) 100%),
           url('https://na.cx/i/pGK1VCg.jpg');
       background-size: cover;
       background-position: center;
@@ -73,37 +73,77 @@
       filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.75));
     }
 
-    /* Social Media & Contact Bar (Between Logo & Find Us) */
-    .social-section {
-      margin: 18px auto 6px;
-      padding: 0 12px;
+    .site-footer {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 100;
+      padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
+      background: #080a10;
+      border-top: 1px solid var(--border-subtle);
       text-align: center;
     }
 
-    .social-label {
-      font-size: 0.86rem;
-      color: rgba(255, 255, 255, 0.82);
-      margin-bottom: 10px;
-      font-weight: 500;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.75);
+    .social-section, .social-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .social-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+    .social-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding-bottom: var(--footer-height, 192px);
+      }
+
+      .site-footer {
+        max-height: 55dvh;
+        overflow-y: auto;
+        transition: transform 180ms ease, visibility 180ms;
+      }
+
+      .site-footer.is-hidden {
+        visibility: hidden;
+        transform: translateY(100%);
+      }
+
+      .social-section {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .social-buttons {
+        display: grid;
+        width: min(100%, 240px);
+        gap: 4px;
+      }
+
+      .social-buttons .social-btn {
+        justify-content: center;
+        min-height: 36px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .site-footer {
+        transition: none;
+      }
     }
 
     .social-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 18px;
+      gap: 6px;
+      padding: 6px 12px;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.88rem;
+      font-size: 0.78rem;
       color: #ffffff;
       transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
@@ -115,8 +155,8 @@
     }
 
     .social-btn svg {
-      width: 18px;
-      height: 18px;
+      width: 15px;
+      height: 15px;
       fill: currentColor;
     }
 
@@ -478,7 +518,7 @@
     /* Toast Notification */
     .toast {
       position: fixed;
-      bottom: 24px;
+      bottom: calc(var(--footer-height, 56px) + 12px);
       left: 50%;
       transform: translateX(-50%) translateY(80px);
       background: #1e293b;
@@ -502,41 +542,11 @@
 </head>
 <body>
 
-  <!-- Top Logo, Social Links & Title Section -->
+  <!-- Top Logo & Title Section -->
   <header class="site-header">
     <div class="logo-wrapper">
       <img src="logo_bar.png" alt="Brand Logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';" />
       <span id="logo-fallback" style="display:none; font-weight:700; font-size:1.35rem; color:#ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.6);">metrogoods · Keychain Hong Kong</span>
-    </div>
-
-    <!-- Social Media & Contact Buttons -->
-    <div class="social-section">
-	
-	    <div class="page-title-group">
-      <h1>Follow Us · 追蹤最新動態</h1>
-    </div>
-	
-      <div class="social-buttons">
-        <a class="social-btn btn-instagram" href="https://www.instagram.com/metrogoods.hk" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
-          @metrogoods.hk
-        </a>
-
-        <a class="social-btn btn-instagram" href="https://www.instagram.com/keychainhk" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
-          @keychainhk
-        </a>
-
-        <a class="social-btn btn-facebook" href="https://www.facebook.com/keychainhk" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
-          keychainhk
-        </a>
-
-        <a class="social-btn btn-whatsapp" href="https://wa.me/85295399243" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.59-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.59.83 2.02.9 2.17.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.41.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.65-.14.27.1 1.69.8 1.98.94.29.14.48.22.55.34.07.12.07.69-.17 1.37Z"/></svg>
-          合作／查詢
-        </a>
-      </div>
     </div>
 
     <div class="page-title-group">
@@ -588,6 +598,68 @@
   </p>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer" id="socialFooter">
+    <div class="social-section">
+      <h2 class="social-label">Follow Us · 追蹤最新動態</h2>
+      <div class="social-buttons">
+        <a class="social-btn btn-instagram" href="https://www.instagram.com/metrogoods.hk" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          @metrogoods.hk
+        </a>
+
+        <a class="social-btn btn-instagram" href="https://www.instagram.com/keychainhk" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>
+          @keychainhk
+        </a>
+
+        <a class="social-btn btn-facebook" href="https://www.facebook.com/keychainhk" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+          keychainhk
+        </a>
+
+        <a class="social-btn btn-whatsapp" href="https://wa.me/85295399243" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.82 14.01c-.24.68-1.41 1.3-1.95 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-3 0-1.43.75-2.13 1.02-2.42.27-.29.59-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.66.5.24.59.83 2.02.9 2.17.07.14.12.31.02.5-.1.19-.14.31-.29.48-.14.17-.3.38-.43.51-.14.14-.29.3-.13.59.17.29.74 1.22 1.59 1.98 1.09.97 2.01 1.27 2.3 1.41.29.14.46.12.63-.07.17-.19.72-.84.91-1.13.19-.29.39-.24.65-.14.27.1 1.69.8 1.98.94.29.14.48.22.55.34.07.12.07.69-.17 1.37Z"/></svg>
+          合作／查詢
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    {
+      const footer = document.getElementById('socialFooter');
+      const mobile = window.matchMedia('(max-width: 680px)');
+      const scrollPosition = () => {
+        const page = document.scrollingElement;
+        const maxScroll = page.scrollHeight - page.clientHeight;
+        return Math.max(0, Math.min(window.scrollY, maxScroll));
+      };
+      let previousScroll = scrollPosition();
+
+      new ResizeObserver(() => {
+        document.body.style.setProperty('--footer-height', footer.offsetHeight + 'px');
+      }).observe(footer);
+
+      const showFooter = () => {
+        previousScroll = scrollPosition();
+        footer.classList.remove('is-hidden');
+        footer.inert = false;
+      };
+
+      mobile.addEventListener('change', showFooter);
+      window.addEventListener('pageshow', showFooter);
+      window.addEventListener('scroll', () => {
+        const currentScroll = scrollPosition();
+        if (mobile.matches && currentScroll !== previousScroll) {
+          const hide = currentScroll > previousScroll && !footer.contains(document.activeElement);
+          footer.classList.toggle('is-hidden', hide);
+          footer.inert = hide;
+        }
+        previousScroll = currentScroll;
+      }, { passive: true });
+    }
+  </script>
 
   <script>
     const CSV_URL = 'saleslocation.csv';
